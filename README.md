@@ -5,3 +5,4 @@
 ###### to be continued...(未完待续...)
 
 ![](read-me-res/img.png)
+![](read-me-res/work.gif)
