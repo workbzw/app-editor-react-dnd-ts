@@ -1,0 +1,32 @@
+.left-panel-item{
+  width: 100%;
+  height: 50px;
+  line-height: 50px;
+  text-align: center;
+  border: 1px solid #000000;
+  cursor: pointer;
+}
+.left-panel-item-parent{
+  margin-top: 10px;
+}
+
+.left-panel {
+  width: 18%;
+  height: 100vh;
+  flex-shrink: 0;
+  background-color: #ffffff;
+  padding: 20px;
+  overflow: scroll;
+}
+
+.component-list {
+  padding-top: 100px;
+  height: 20vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+.save-button {
+  width: 100%;
+}
