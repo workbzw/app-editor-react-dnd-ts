@@ -9,11 +9,16 @@ interface P {
     text: string;
     type: EditableType;
     img: string;
-    itemStyle: React.CSSProperties;
 }
 
+const gridStyle: React.CSSProperties = {
+    width: '100%',
+    textAlign: 'center',
+};
+
+
 export const LeftPanelItem = (props: P) => {
-    let {text, type, img, itemStyle} = props
+    let {text, type, img} = props
     let contextData = useContext<ContextData>(MyContext)
     let handleDrag = () => {
         contextData.viewType = type;
@@ -27,7 +32,7 @@ export const LeftPanelItem = (props: P) => {
     }));
     return (
         <div ref={dragRef} onDrag={handleDrag} className={"left-panel-item-parent"}>
-            <Card.Grid title={text} style={itemStyle}>
+            <Card.Grid title={text} style={gridStyle}>
                 <div style={{marginBottom: 10}}>{text}</div>
                 <Image className={"card-item-img"} src={img} preview={false}/>
             </Card.Grid>
