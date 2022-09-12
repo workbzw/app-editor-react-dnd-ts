@@ -1,16 +1,16 @@
 import React from "react";
 import {Button} from "antd";
-import {Card, CardProps} from "../Card";
+import {DragItemView, Props} from "../DragItemView";
 
-interface P extends CardProps {
+interface P extends Props {
     text?: string
 }
 
 export const EditableButton = (props: P) => {
-    let {id, text, index, moveCard} = props;
+    let {id, text, index, moveItem} = props;
     return (
-        <Card id={id} select={false} index={index} moveCard={moveCard}>
+        <DragItemView id={id} select={false} index={index} moveItem={moveItem}>
             <Button>按钮</Button>
-        </Card>
+        </DragItemView>
     )
 }

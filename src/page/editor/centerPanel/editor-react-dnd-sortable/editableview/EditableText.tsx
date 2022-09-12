@@ -1,15 +1,15 @@
 import React from "react";
-import {Card, CardProps} from "../Card";
+import {DragItemView, Props} from "../DragItemView";
 
-interface P extends CardProps {
+interface P extends Props {
     text?:string
 }
 
 export const EditableText = (props: P) => {
-    let {id, text,index, moveCard} = props;
+    let {id, text,index, moveItem} = props;
     return (
-        <Card id={id} select={false} index={index} moveCard={moveCard}>
+        <DragItemView id={id} select={false} index={index} moveItem={moveItem}>
             <div className={"editable"}>{text}</div>
-        </Card>
+        </DragItemView>
     )
 }

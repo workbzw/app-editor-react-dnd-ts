@@ -3,10 +3,9 @@ import {BrowserRouter, Route, Routes} from "react-router-dom";
 import Login from "./page/login";
 import Home from "./page/home";
 import {EditorPage} from "./page/editor";
-import {flushSync} from "react-dom";
-
 
 function App() {
+
     return (
         <Fragment>
             <BrowserRouter>

@@ -1,8 +1,8 @@
 import React from "react";
 import {Avatar, List} from "antd";
-import {Card, CardProps} from "../Card";
+import {DragItemView, Props} from "../DragItemView";
 
-interface P extends CardProps {
+interface P extends Props {
 }
 
 const data = Array.from({length: 3}).map((_, i) => ({
@@ -15,9 +15,9 @@ const data = Array.from({length: 3}).map((_, i) => ({
         'We supply a series of design principles, practical patterns and high quality design resources (Sketch and Axure), to help people create their product prototypes beautifully and efficiently.',
 }));
 export const EditableList = (props: P) => {
-    let {id, index, moveCard} = props;
+    let {id, index, moveItem} = props;
     return (
-        <Card id={id} select={false} index={index} moveCard={moveCard}>
+        <DragItemView id={id} select={false} index={index} moveItem={moveItem}>
             <List
                 // header={<div>Header</div>}
                 // footer={<div>Footer</div>}
@@ -33,6 +33,6 @@ export const EditableList = (props: P) => {
                     </List.Item>
                 )}
             />
-        </Card>
+        </DragItemView>
     )
 }

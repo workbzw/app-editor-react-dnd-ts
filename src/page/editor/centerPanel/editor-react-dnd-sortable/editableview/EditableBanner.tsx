@@ -1,8 +1,8 @@
 import React from "react";
 import {Carousel} from "antd";
-import {Card, CardProps} from "../Card";
+import {DragItemView, Props} from "../DragItemView";
 
-interface P extends CardProps {
+interface P extends Props {
     imgUrl?: string;
 }
 
@@ -16,8 +16,8 @@ const contentStyle: React.CSSProperties = {
 };
 
 export const EditableBanner = (props: P) => {
-    let {id, index, select, moveCard} = props;
-    return (<Card id={id} select={select} index={index} moveCard={moveCard}>
+    let {id, index, select, moveItem} = props;
+    return (<DragItemView id={id} select={select} index={index} moveItem={moveItem}>
             <Carousel autoplay>
                 <div>
                     <h3 style={contentStyle}>图片1</h3>
@@ -32,6 +32,6 @@ export const EditableBanner = (props: P) => {
                     <h3 style={contentStyle}>图片4</h3>
                 </div>
             </Carousel>
-        </Card>
+        </DragItemView>
     )
 }

@@ -3,11 +3,11 @@ import "./leftPanelItem.scss"
 import {useDrag} from "react-dnd";
 import MyContext, {ContextData} from "../../../../context/context"
 import {Card, Image} from "antd";
-import {DragType, EditableType} from "../../../../common/editor/EditableType";
+import {DragType, DragItemViewType} from "../../../../common/editor/DragItemViewType";
 
 interface P {
     text: string;
-    type: EditableType;
+    type: DragItemViewType;
     img: string;
 }
 

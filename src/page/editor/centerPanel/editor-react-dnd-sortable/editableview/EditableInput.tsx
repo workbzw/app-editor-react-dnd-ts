@@ -1,17 +1,17 @@
 import React from "react";
 import {Input} from "antd";
-import {Card, CardProps} from "../Card";
+import {DragItemView, Props} from "../DragItemView";
 
-interface P extends CardProps {
+interface P extends Props {
     preInput?: string;
     hint?: string;
 }
 
 export const EditableInput = (props: P) => {
-    let {id, index, moveCard} = props;
+    let {id, index, moveItem} = props;
     return (
-        <Card id={id} select={false} index={index} moveCard={moveCard}>
+        <DragItemView id={id} select={false} index={index} moveItem={moveItem}>
             <Input/>
-        </Card>
+        </DragItemView>
     )
 }

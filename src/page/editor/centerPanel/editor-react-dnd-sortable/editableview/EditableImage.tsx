@@ -1,16 +1,16 @@
 import React from "react";
 import {Image} from "antd";
-import {Card, CardProps} from "../Card";
+import {DragItemView, Props} from "../DragItemView";
 
-interface P extends CardProps {
+interface P extends Props {
     imgUrl?: string;
 }
 
 export const EditableImage = (props: P) => {
-    let {imgUrl, id, index, moveCard} = props;
+    let {imgUrl, id, index, moveItem} = props;
     return (
-        <Card id={id} select={false} index={index} moveCard={moveCard}>
+        <DragItemView id={id} select={false} index={index} moveItem={moveItem}>
             <Image src={imgUrl} preview={false}/>
-        </Card>
+        </DragItemView>
     )
 }

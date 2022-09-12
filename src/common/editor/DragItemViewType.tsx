@@ -1,5 +1,5 @@
 //此处添加组件类型
-export enum EditableType {
+export enum DragItemViewType {
     Text = "Text",
     Button = "Button",
     Input = "Input",
@@ -12,14 +12,14 @@ export enum EditableType {
 
 //添加组件类型之后，在此处添加进放置接收类型
 export const DropAcceptList = [
-    EditableType.Text,
-    EditableType.Button,
-    EditableType.Input,
-    EditableType.Image,
-    EditableType.Banner,
-    EditableType.List,
-    EditableType.Layout,
-    EditableType.Card,
+    DragItemViewType.Text,
+    DragItemViewType.Button,
+    DragItemViewType.Input,
+    DragItemViewType.Image,
+    DragItemViewType.Banner,
+    DragItemViewType.List,
+    DragItemViewType.Layout,
+    DragItemViewType.Card,
 ]
 
 export enum DragType {
