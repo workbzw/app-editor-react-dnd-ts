@@ -1,13 +1,9 @@
-import React, {Fragment, useState} from 'react';
+import React, {Fragment} from 'react';
 import {BrowserRouter, Route, Routes} from "react-router-dom";
 import Login from "./page/login";
 import Home from "./page/home";
 import {EditorPage} from "./page/editor";
-
-import {DragItemViewType, DragType} from "./common/editor/DragItemViewType";
 import {Provider} from "react-redux";
-import {legacy_createStore as createStore} from 'redux'
-import {configureStore} from "@reduxjs/toolkit";
 import {store} from "./store";
 
 type Action = {
@@ -41,16 +37,16 @@ function App() {
     return (
         <Provider store={store}>
 
-                <Fragment>
-                    <BrowserRouter>
-                        <Routes>
-                            <Route path="/" element={<Home title={"首页"}/>}/>
-                            <Route path="/home" element={<Home title={"首页"}/>}/>
-                            <Route path="/login" element={<Login title={"登录页"}/>}/>
-                            <Route path="/canvas" element={<EditorPage/>}/>
-                        </Routes>
-                    </BrowserRouter>
-                </Fragment>
+            <Fragment>
+                <BrowserRouter>
+                    <Routes>
+                        <Route path="/" element={<Home title={"首页"}/>}/>
+                        <Route path="/home" element={<Home title={"首页"}/>}/>
+                        <Route path="/login" element={<Login title={"登录页"}/>}/>
+                        <Route path="/canvas" element={<EditorPage/>}/>
+                    </Routes>
+                </BrowserRouter>
+            </Fragment>
 
         </Provider>
     );

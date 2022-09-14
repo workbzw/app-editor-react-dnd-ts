@@ -1,7 +1,6 @@
-import React, {useContext, useEffect, useState} from "react";
+import React from "react";
 import "./rightPanel.scss"
 import {Form, Input} from "antd";
-import MyContext, {ContextData, ItemView} from '../../../context/context'
 import {counterActions, RootState, store} from "../../../store";
 import {useSelector} from "react-redux";
 
@@ -44,7 +43,7 @@ const CustomizedForm: React.FC<CustomizedFormProps> = ({onChange, fields}) => (
 export const RightPanel = (props: P) => {
     const state = useSelector((state: RootState) => state);
     const onChange = (e: any) => {
-        store.dispatch(counterActions.setItemViewText({text:e.target.value,id:state.currentSelect.id}))
+        store.dispatch(counterActions.setItemViewText({text: e.target.value, id: state.currentSelect.id}))
         // state.currentSelect.text = e.target.value
         // store.dispatch(counterActions.setItemView(state.currentSelect))
     }
