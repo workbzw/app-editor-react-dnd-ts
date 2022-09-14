@@ -20,7 +20,6 @@ const gridStyle: React.CSSProperties = {
 export const LeftPanelItem = (props: P) => {
     let {text, type, img} = props
     let handleDrag = () => {
-        console.log("dragViewType: type:" + type)
         store.dispatch(counterActions.dragItemView({dragViewType: type, dragType: DragType.Add}))
     }
     let [{isDragging}, dragRef] = useDrag(() => ({

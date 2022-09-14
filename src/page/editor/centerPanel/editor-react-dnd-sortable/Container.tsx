@@ -5,6 +5,7 @@ import {ItemView} from "../../../../context/context";
 import {useDrop} from "react-dnd";
 import {useSelector} from "react-redux";
 import {counterActions, RootState, store} from "../../../../store";
+import {random} from "../../../../common/Utils";
 
 const style = {
     width: "100%",
@@ -21,20 +22,22 @@ export interface Item {
 export interface Props {
 }
 
+
+
 export const Container: FC<Props> = () => {
-    let idData = 0;
     const state = useSelector((state: RootState) => state);
-
-
     let [, drop] = useDrop(() => ({
         accept: DropAcceptList,
         drop: (item, monitor) => {
             if (store.getState().currentDrag.dragType === DragType.Add) {
+                const didDrop = monitor.didDrop()
+                if (didDrop) return
+                let randomId  = random()
                 store.dispatch(counterActions.addView(
                     {
-                        id: (idData++).toString(),
+                        id: randomId,
                         type: store.getState().currentDrag.dragViewType,
-                        text: state.currentSelect.text,
+                        text: randomId,
                     }))
             }
         }
