@@ -1,9 +1,9 @@
-import React, {useContext} from "react";
+import React from "react";
 import "./leftPanelItem.scss"
 import {useDrag} from "react-dnd";
-import MyContext, {ContextData} from "../../../../context/context"
 import {Card, Image} from "antd";
-import {DragType, DragItemViewType} from "../../../../common/editor/DragItemViewType";
+import {DragItemViewType, DragType} from "../../../../common/editor/DragItemViewType";
+import {counterActions, store} from "../../../../store";
 
 interface P {
     text: string;
@@ -19,10 +19,9 @@ const gridStyle: React.CSSProperties = {
 
 export const LeftPanelItem = (props: P) => {
     let {text, type, img} = props
-    let contextData = useContext<ContextData>(MyContext)
     let handleDrag = () => {
-        contextData.viewType = type;
-        contextData.drag.dragType = DragType.Add;
+        console.log("dragViewType: type:" + type)
+        store.dispatch(counterActions.dragItemView({dragViewType: type, dragType: DragType.Add}))
     }
     let [{isDragging}, dragRef] = useDrag(() => ({
         type: type,

@@ -1,15 +1,13 @@
 //创建一个文件，暂且命名为context.js，导出createContext()的返回值
 import {createContext} from "react";
-import {DragType, DragItemViewType} from "../common/editor/DragItemViewType";
+import {DragItemViewType, DragType} from "../common/editor/DragItemViewType";
 
 export interface ContextData {
-    drag: {
+    currentDrag: {
         dragType: DragType;
-        dragFrom: number;
-        dragTo: number;
+        dragViewType: DragItemViewType;
     }
-    currentSelected: ItemView,
-    viewType: DragItemViewType;
+    currentSelect: ItemView,
     itemList: ItemView[]
 }
 
@@ -20,16 +18,14 @@ export interface ItemView {
 }
 
 export default createContext<ContextData>({
-    drag: {
+    currentDrag: {
         dragType: DragType.Add,
-        dragFrom: 0,
-        dragTo: 0,
+        dragViewType: DragItemViewType.Button,
     },
-    currentSelected: {
+    currentSelect: {
         id: "string",
         type: DragItemViewType.Button,
         text: "string",
     },
-    viewType: DragItemViewType.Text,
     itemList: []
 });

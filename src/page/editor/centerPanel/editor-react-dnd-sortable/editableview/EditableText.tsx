@@ -6,8 +6,8 @@ interface P extends Props {
 }
 
 export const EditableText = (props: P) => {
-    let {itemView,text, index, moveItem} = props;
-    return (<DragItemView itemView={itemView} index={index} moveItem={moveItem}>
+    let {itemView,text, index, } = props;
+    return (<DragItemView itemView={itemView} index={index} >
             <div className={"editable"}>{text}</div>
         </DragItemView>
     )

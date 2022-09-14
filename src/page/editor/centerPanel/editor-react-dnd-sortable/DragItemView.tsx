@@ -1,15 +1,15 @@
 import type {Identifier, XYCoord} from 'dnd-core'
 import type {FC} from 'react'
-import {useContext, useRef, useState} from 'react'
+import {useRef} from 'react'
 import {useDrag, useDrop} from 'react-dnd'
 import {DragItemViewType, DragType} from "../../../../common/editor/DragItemViewType";
-import MyContext, {ContextData, ItemView} from "../../../../context/context";
-import {incremented, store} from "../../../../store";
+import {ItemView} from "../../../../context/context";
+import {counterActions, RootState, store} from "../../../../store";
+import {useSelector} from "react-redux";
 
 export interface Props {
     itemView: ItemView
     index: number
-    moveItem: (dragIndex: number, hoverIndex: number) => void
     children?: any
 }
 
@@ -19,14 +19,11 @@ interface DragItem {
     type: string
 }
 
-export const DragItemView: FC<Props> = ({itemView, index, moveItem, children}) => {
+export const DragItemView: FC<Props> = ({itemView, index, children}) => {
     const ref = useRef<HTMLDivElement>(null)
-    const contextData = useContext<ContextData>(MyContext)
-
-    const [context, setContext] = useState(contextData);
-    console.log("contextData.currentSelected:init:" + contextData.currentSelected)
+    const state = useSelector((state: RootState) => state);
     const style = {
-        border: contextData.currentSelected.id === itemView.id ? '1px dashed gray' : '0px dashed gray',
+        border: state.currentSelect.id === itemView.id ? '1px dashed gray' : '0px dashed gray',
         padding: '0.5rem 0.5rem 0.5rem 0.5rem',
         marginBottom: '.5rem',
         backgroundColor: 'white',
@@ -49,7 +46,8 @@ export const DragItemView: FC<Props> = ({itemView, index, moveItem, children}) =
             const hoverClientY = (clientOffset as XYCoord).y - hoverBoundingRect.top
             if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) return
             if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) return
-            moveItem(dragIndex, hoverIndex)
+            // moveItem(dragIndex, hoverIndex)
+            store.dispatch(counterActions.changeIndex({dragIndex: dragIndex, hoverIndex: hoverIndex}))
             item.index = hoverIndex
         },
     })
@@ -65,19 +63,14 @@ export const DragItemView: FC<Props> = ({itemView, index, moveItem, children}) =
     })
 
     let handleDrag = () => {
-        contextData.viewType = DragItemViewType.Card;
-        contextData.drag.dragType = DragType.Adjust;
+        store.dispatch(counterActions.dragItemView({dragType: DragType.Adjust, dragViewType: itemView.type}))
     }
 
     let handleClick = () => {
-        contextData.currentSelected = itemView
-        store.dispatch(incremented())
-        moveItem(index, index)
+        store.dispatch(counterActions.selectItemView(itemView))
     }
-
     const opacity = isDragging ? 0 : 1
     drag(drop(ref))
-
     return (
         // <div>
         //     <div>{contextData.currentSelected.text}</div>

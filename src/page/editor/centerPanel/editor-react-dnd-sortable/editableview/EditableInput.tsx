@@ -8,8 +8,8 @@ interface P extends Props {
 }
 
 export const EditableInput = (props: P) => {
-    let {itemView, index, moveItem} = props;
-    return (<DragItemView itemView={itemView} index={index} moveItem={moveItem}>
+    let {itemView, index, } = props;
+    return (<DragItemView itemView={itemView} index={index} >
             <Input value={itemView.text}/>
         </DragItemView>
     )

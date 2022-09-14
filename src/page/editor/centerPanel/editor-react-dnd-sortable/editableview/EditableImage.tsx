@@ -7,8 +7,8 @@ interface P extends Props {
 }
 
 export const EditableImage = (props: P) => {
-    let {itemView, imgUrl,index, moveItem} = props;
-    return (<DragItemView itemView={itemView} index={index} moveItem={moveItem}>
+    let {itemView, imgUrl,index, } = props;
+    return (<DragItemView itemView={itemView} index={index} >
             <Image src={imgUrl} preview={false}/>
         </DragItemView>
     )

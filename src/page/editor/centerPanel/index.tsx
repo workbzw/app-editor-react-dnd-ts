@@ -9,7 +9,6 @@ interface Props {
 }
 
 export const CenterPanel: FC<Props> = () => {
-    const context = useContext(MyContext);
     return (
         <div className={"draw-panel"}>
             <DndProvider backend={HTML5Backend}>

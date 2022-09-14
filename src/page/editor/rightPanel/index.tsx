@@ -1,14 +1,11 @@
-import React, {ChangeEvent, useCallback, useContext, useEffect, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import "./rightPanel.scss"
 import {Form, Input} from "antd";
 import MyContext, {ContextData, ItemView} from '../../../context/context'
-import update from "immutability-helper";
-import {Item} from "../centerPanel/editor-react-dnd-sortable/Container";
-import {incremented, RootState, store} from "../../../store";
+import {counterActions, RootState, store} from "../../../store";
 import {useSelector} from "react-redux";
 
 interface P {
-    itemView: ItemView;
 }
 
 interface FieldData {
@@ -45,41 +42,21 @@ const CustomizedForm: React.FC<CustomizedFormProps> = ({onChange, fields}) => (
 
 
 export const RightPanel = (props: P) => {
-    let {itemView} = props
-    const [form] = Form.useForm();
-    const [checkNick, setCheckNick] = useState(false);
-    let context = useContext<ContextData>(MyContext)
-    const [text, setText] = useState(context.currentSelected.text);
-    useEffect(() => {
-        form.validateFields(['nickname']).then(r => {
-        });
-    }, [checkNick, form]);
-    const state = useSelector((state: RootState) => state.value);
-    const [fields, setFields] = useState<FieldData[]>([{name: state, value: state}]);
-    const handleSetFields = (fieldList: FieldData[]) => {
-        setFields(fieldList)
-        fieldList.map(e => context.currentSelected.text = e.value)
-    }
-    // onFinish={onFinishSearch}
-    // onValuesChange={onValuesChange}
-    const changeMsg = (e: any) => {
-        context.currentSelected.text = e.target.value
-    }
-
+    const state = useSelector((state: RootState) => state);
     const onChange = (e: any) => {
-        setText(e.target.value)
-        context.currentSelected.text = e.target.value
+        store.dispatch(counterActions.setItemViewText({text:e.target.value,id:state.currentSelect.id}))
+        // state.currentSelect.text = e.target.value
+        // store.dispatch(counterActions.setItemView(state.currentSelect))
     }
 
     return (
         <div className={"right-panel"}>
-                <Input
-                    placeholder="Flight name"
-                    size="large"
-                    value={context.currentSelected.text}
-                    onChange={onChange}
-                />
-            {/*<pre className="language-bash">{JSON.stringify(fields, null, 2)}</pre>*/}
+            <Input
+                placeholder="Flight name"
+                size="large"
+                value={state.currentSelect.text}
+                onChange={onChange}
+            />
         </div>
     );
 }
