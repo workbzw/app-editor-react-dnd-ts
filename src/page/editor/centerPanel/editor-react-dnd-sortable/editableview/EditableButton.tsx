@@ -7,10 +7,9 @@ interface P extends Props {
 }
 
 export const EditableButton = (props: P) => {
-    let {id, text, index, moveItem} = props;
-    return (
-        <DragItemView id={id} select={false} index={index} moveItem={moveItem}>
-            <Button>按钮</Button>
+    let {itemView, index, moveItem} = props;
+    return (<DragItemView itemView={itemView} index={index} moveItem={moveItem}>
+            <Button>{itemView.text}</Button>
         </DragItemView>
     )
 }

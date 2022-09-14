@@ -1,29 +1,31 @@
 import update from 'immutability-helper'
-import type {FC} from 'react'
-import {useCallback, useContext, useState} from 'react'
-import {DragType, DropAcceptList, DragItemViewType} from "../../../../common/editor/DragItemViewType";
+import {FC, useCallback, useContext, useState} from 'react'
+import {DragItemViewType, DragType, DropAcceptList} from "../../../../common/editor/DragItemViewType";
 import {DragItemViewProvider} from "./DragItemViewProvider";
-import MyContext, {ContextData} from "../../../../context/context";
+import MyContext, {ContextData, ItemView} from "../../../../context/context";
 import {useDrop} from "react-dnd";
 
 const style = {
     width: "100%",
     height: "100%"
 }
+
 export interface Item {
-    id: number
+    id: string
     type: DragItemViewType
+    text: string
     select: boolean
 }
-export interface ContainerState {
-    cards: Item[]
+
+export interface Props {
 }
-export const Container: FC = () => {
+
+export const Container: FC<Props> = () => {
     let idData = 0;
     let contextData = useContext<ContextData>(MyContext)
-    const [cards, setCards] = useState(contextData.itemList)
-    const moveCard = useCallback((dragIndex: number, hoverIndex: number) => {
-        setCards((prevCards: Item[]) =>
+    const [items, setItems] = useState(contextData.itemList)
+    const moveItems = useCallback((dragIndex: number, hoverIndex: number) => {
+        setItems((prevCards: ItemView[]) =>
             update(prevCards, {
                 $splice: [
                     [dragIndex, 1],
@@ -36,9 +38,13 @@ export const Container: FC = () => {
     let [, drop] = useDrop(() => ({
         accept: DropAcceptList,
         drop: (item, monitor) => (
-            setCards((preList) => {
+            setItems((preList) => {
                     if (contextData.drag.dragType === DragType.Add) {
-                        return [...preList, {id: idData++, type: contextData.viewType, select: false}]
+                        return [...preList, {
+                            id: (idData++).toString(),
+                            type: contextData.viewType,
+                            text: "文字",
+                        }]
                     } else if (contextData.drag.dragType === DragType.Adjust) {
                         return preList
                     } else {
@@ -48,14 +54,14 @@ export const Container: FC = () => {
             )
         )
     }))
-    const renderCard = useCallback(
-        (card: { id: number; type: DragItemViewType; select: boolean; }, index: number) => {
-            return (DragItemViewProvider.of(card.id, card.type, card.select, index, moveCard))
+    const renderItem = useCallback(
+        (itemView: ItemView, index: number) => {
+            return DragItemViewProvider.of(itemView, index, moveItems)
         }, [],)
 
     return (
-        <>
-            <div ref={drop} style={style}>{cards.map((card, i) => renderCard(card, i))}</div>
-        </>
+        // <div>数量：{items.length}
+        <div ref={drop} style={style}>{items.map((card, i) => renderItem(card, i))}</div>
+        // </div>
     )
 }

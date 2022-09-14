@@ -8,15 +8,15 @@ export interface ContextData {
         dragFrom: number;
         dragTo: number;
     }
-    currentSelected: string,
+    currentSelected: ItemView,
     viewType: DragItemViewType;
     itemList: ItemView[]
 }
 
 export interface ItemView {
-    id: number,
+    id: string,
     type: DragItemViewType,
-    select: boolean
+    text: string,
 }
 
 export default createContext<ContextData>({
@@ -25,7 +25,11 @@ export default createContext<ContextData>({
         dragFrom: 0,
         dragTo: 0,
     },
-    currentSelected: "",
+    currentSelected: {
+        id: "string",
+        type: DragItemViewType.Button,
+        text: "string",
+    },
     viewType: DragItemViewType.Text,
     itemList: []
 });

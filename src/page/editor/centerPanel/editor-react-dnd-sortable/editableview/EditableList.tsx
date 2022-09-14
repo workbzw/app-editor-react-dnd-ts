@@ -15,9 +15,8 @@ const data = Array.from({length: 3}).map((_, i) => ({
         'We supply a series of design principles, practical patterns and high quality design resources (Sketch and Axure), to help people create their product prototypes beautifully and efficiently.',
 }));
 export const EditableList = (props: P) => {
-    let {id, index, moveItem} = props;
-    return (
-        <DragItemView id={id} select={false} index={index} moveItem={moveItem}>
+    let {itemView, index, moveItem} = props;
+    return (<DragItemView itemView={itemView} index={index} moveItem={moveItem}>
             <List
                 // header={<div>Header</div>}
                 // footer={<div>Footer</div>}

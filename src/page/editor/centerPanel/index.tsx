@@ -1,17 +1,19 @@
-import React from "react";
+import React, {FC, useContext} from "react";
 import "./center.scss"
 import {HTML5Backend} from "react-dnd-html5-backend";
-import Example from "./editor-react-dnd-sortable/example";
 import {DndProvider} from "react-dnd";
+import {Container} from "./editor-react-dnd-sortable/Container";
+import MyContext from '../../../context/context'
 
-interface P {
+interface Props {
 }
 
-export const CenterPanel = () => {
+export const CenterPanel: FC<Props> = () => {
+    const context = useContext(MyContext);
     return (
         <div className={"draw-panel"}>
             <DndProvider backend={HTML5Backend}>
-                <Example/>
+                <Container/>
             </DndProvider>
         </div>
     );

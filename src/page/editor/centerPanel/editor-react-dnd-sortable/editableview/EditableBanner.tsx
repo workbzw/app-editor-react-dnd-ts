@@ -16,8 +16,8 @@ const contentStyle: React.CSSProperties = {
 };
 
 export const EditableBanner = (props: P) => {
-    let {id, index, select, moveItem} = props;
-    return (<DragItemView id={id} select={select} index={index} moveItem={moveItem}>
+    let {itemView, index, moveItem} = props;
+    return (<DragItemView itemView={itemView} index={index} moveItem={moveItem}>
             <Carousel autoplay>
                 <div>
                     <h3 style={contentStyle}>图片1</h3>
