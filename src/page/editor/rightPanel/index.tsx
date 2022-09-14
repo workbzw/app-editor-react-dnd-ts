@@ -50,12 +50,14 @@ export const RightPanel = (props: P) => {
 
     return (
         <div className={"right-panel"}>
-            <Input
-                placeholder="Flight name"
-                size="large"
-                value={state.currentSelect.text}
-                onChange={onChange}
-            />
+            <div>文字：
+                <Input style={{width: '80%'}}
+                       placeholder="Flight name"
+                       size="large"
+                       value={state.currentSelect.text}
+                       onChange={onChange}
+                />
+            </div>
         </div>
     );
 }
