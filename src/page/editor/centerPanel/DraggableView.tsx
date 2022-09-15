@@ -3,7 +3,7 @@ import type {FC} from 'react'
 import {useRef, useState} from 'react'
 import {useDrag, useDrop} from 'react-dnd'
 import {DragItemViewType, DragType, DropAcceptList} from "../../../common/editor/DragItemViewType";
-import {ItemView} from "../../../store/GlobalViewData";
+import {ItemView, ItemViewFieldType} from "../../../store/GlobalViewData";
 import {counterActions, RootState, store} from "../../../store";
 import {useSelector} from "react-redux";
 import {random} from "../../../common/Utils";
@@ -38,10 +38,18 @@ export const DraggableView: FC<Props> = ({itemView, index, children}) => {
     }, drop] = useDrop<DragItem, void, { handlerId: Identifier | null, isOver: boolean, isOverCurrent: boolean }>({
         accept: DropAcceptList,
         drop: (item, monitor) => {
-            if (store.getState().currentDrag.dragType === DragType.Add) {//如果是新增
+            //如果是新增
+            if (store.getState().currentDrag.dragType === DragType.Add) {
                 const didDrop = monitor.didDrop()
                 if (didDrop) return
                 let randomId = random()
+                let map = new Map()//属性集合
+                map.set("text", {
+                    id: random(),
+                    name: "内容",
+                    value: "我是内容",
+                    type: ItemViewFieldType.Input
+                })
                 store.dispatch(counterActions.insertIntoIndex(
                     {
                         index: index,
@@ -49,10 +57,10 @@ export const DraggableView: FC<Props> = ({itemView, index, children}) => {
                             id: randomId,
                             type: store.getState().currentDrag.dragViewType,
                             text: randomId,
-                            fields: []
                         }
                     }))
-            } else if (store.getState().currentDrag.dragType === DragType.Adjust) {//如果是调整
+                //如果是调整
+            } else if (store.getState().currentDrag.dragType === DragType.Adjust) {
                 if (mDragIndex !== -1) {
                     store.dispatch(counterActions.moveToIndex({
                         dragIndex: mDragIndex,
@@ -66,7 +74,7 @@ export const DraggableView: FC<Props> = ({itemView, index, children}) => {
             return {
                 handlerId: monitor.getHandlerId(),
                 isOver: monitor.isOver(),
-                isOverCurrent: monitor.isOver({shallow: true})
+                isOverCurrent: monitor.isOver({shallow: true})//当前悬停在此item上
             }
         },
         hover(item: DragItem, monitor) {//拖拽悬停

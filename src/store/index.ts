@@ -1,7 +1,6 @@
 import {configureStore, createSlice, PayloadAction} from '@reduxjs/toolkit'
 import {DragItemViewType, DragType} from "../common/editor/DragItemViewType";
-import {ItemView, ItemViewFieldType} from "./GlobalViewData";
-import {random} from "../common/Utils";
+import {ItemView} from "./GlobalViewData";
 
 export type ChangeIndexParam = {
     dragIndex: number;
@@ -32,24 +31,11 @@ const viewSlice = createSlice({
             id: "string",
             type: DragItemViewType.Button,
             text: "string",
-            fields: [
-                {
-                    id: random(),
-                    name: "内容",
-                    value: "string2",
-                    type: ItemViewFieldType.Input
-                }, {
-                    id: random(),
-                    name: "高度",
-                    value: "string2",
-                    type: ItemViewFieldType.Input
-                }]
         },
         itemList: [{
             id: "string",
             type: DragItemViewType.Button,
             text: "string",
-            fields: [{id: random(), name: "内容", value: "我是内容", type: ItemViewFieldType.Input}]
         }]
     },
     reducers: {

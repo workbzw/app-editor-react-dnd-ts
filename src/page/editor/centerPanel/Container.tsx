@@ -1,7 +1,7 @@
 import {FC, useCallback} from 'react'
 import {DragType, DropAcceptList} from "../../../common/editor/DragItemViewType";
 import {DraggableViewProvider} from "./DraggableViewProvider";
-import {ItemView} from "../../../store/GlobalViewData";
+import {ItemView, ItemViewFieldType} from "../../../store/GlobalViewData";
 import {useDrop} from "react-dnd";
 import {useSelector} from "react-redux";
 import {counterActions, RootState, store} from "../../../store";
@@ -24,12 +24,18 @@ export const Container: FC<Props> = () => {
                 const didDrop = monitor.didDrop()
                 if (didDrop) return
                 let randomId = random()
+                let map = new Map()//属性集合
+                map.set("text", {
+                    id: random(),
+                    name: "内容",
+                    value: "我是内容",
+                    type: ItemViewFieldType.Input
+                })
                 store.dispatch(counterActions.addView(
                     {
                         id: randomId,
                         type: store.getState().currentDrag.dragViewType,
                         text: randomId,
-                        fields: []
                     }))
             }
         }

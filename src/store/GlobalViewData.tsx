@@ -14,14 +14,13 @@ export interface ItemView {
     id: string,
     type: DragItemViewType,
     text: string,
-    fields: ItemViewField[]
 }
 
 export interface ItemViewField {
     id: string,
     name: string,
+    value: any,
     type: ItemViewFieldType,
-    value: string
 }
 
 export enum ItemViewFieldType {
