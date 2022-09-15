@@ -1,6 +1,6 @@
 import {configureStore, createSlice, PayloadAction} from '@reduxjs/toolkit'
 import {DragItemViewType, DragType} from "../common/editor/DragItemViewType";
-import {ItemView} from "../context/context";
+import {ItemView, ItemViewFieldType} from "./GlobalViewData";
 import {random} from "../common/Utils";
 
 export type ChangeIndexParam = {
@@ -21,8 +21,8 @@ export type DragItemView = {
     dragViewType: DragItemViewType;
 }
 
-const counterSlice = createSlice({
-    name: 'counter',
+const viewSlice = createSlice({
+    name: 'view',
     initialState: {
         currentDrag: {
             dragType: DragType.Add,
@@ -32,35 +32,47 @@ const counterSlice = createSlice({
             id: "string",
             type: DragItemViewType.Button,
             text: "string",
+            fields: [
+                {
+                    id: random(),
+                    name: "内容",
+                    value: "string2",
+                    type: ItemViewFieldType.Input
+                }, {
+                    id: random(),
+                    name: "高度",
+                    value: "string2",
+                    type: ItemViewFieldType.Input
+                }]
         },
         itemList: [{
             id: "string",
             type: DragItemViewType.Button,
             text: "string",
+            fields: [{id: random(), name: "内容", value: "我是内容", type: ItemViewFieldType.Input}]
         }]
     },
     reducers: {
         addView: (state, action: PayloadAction<ItemView>) => {
+            //新增控件
             state.itemList.push(action.payload)
         },
         moveToIndex: (state, action: PayloadAction<ChangeIndexParam>) => {
-            // const [items, setItems] = useState(state.itemList)
-            // update(prevCards, {
-            //     $splice: [
-            //         [dragIndex, 1],
-            //         [hoverIndex, 0, prevCards[dragIndex] as Item],
-            //     ],
-            // })
+            //删除当前拖拽控件
             state.itemList.splice(action.payload.dragIndex, 1)
+            //插入至悬停位置
             state.itemList.splice(action.payload.hoverIndex, 0, action.payload.itemView)
         },
         insertIntoIndex: (state, action: PayloadAction<InsertByIndex>) => {
-            state.itemList.splice(action.payload.index, 0,action.payload.itemView)
+            //插入至悬停位置
+            state.itemList.splice(action.payload.index, 0, action.payload.itemView)
         },
         selectItemView: (state, action: PayloadAction<ItemView>) => {
+            //选中view
             state.currentSelect = action.payload;
         },
         setItemViewText: (state, action: PayloadAction<ChangeTextParam>) => {
+            //改变文字
             state.currentSelect.text = action.payload.text;
             for (let i = 0; i < state.itemList.length; i++) {
                 if (state.itemList[i].id === action.payload.id) {
@@ -69,10 +81,8 @@ const counterSlice = createSlice({
                 }
             }
         },
-        setItemView: (state, action: PayloadAction<ItemView>) => {
-            state.currentSelect = action.payload;
-        },
         dragItemView: (state, action: PayloadAction<DragItemView>) => {
+            //被拖拽控件的拖拽目的(新增、排序)、拖拽控件类型
             state.currentDrag.dragType = action.payload.dragType
             state.currentDrag.dragViewType = action.payload.dragViewType
         }
@@ -80,13 +90,10 @@ const counterSlice = createSlice({
 })
 
 export const store = configureStore({
-    reducer: counterSlice.reducer
+    reducer: viewSlice.reducer
 })
 
 export type RootState = ReturnType<typeof store.getState>
-export const counterActions = counterSlice.actions;
+export const counterActions = viewSlice.actions;
 // 可以订阅 store
 // store.subscribe(() => console.log(store.getState()))
-// 将我们所创建的 action 对象传递给 `dispatch`
-// store.dispatch(addView)
-// {value: 1}

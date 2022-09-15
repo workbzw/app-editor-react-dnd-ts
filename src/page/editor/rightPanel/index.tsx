@@ -44,16 +44,13 @@ export const RightPanel = (props: P) => {
     const state = useSelector((state: RootState) => state);
     const onChange = (e: any) => {
         store.dispatch(counterActions.setItemViewText({text: e.target.value, id: state.currentSelect.id}))
-        // state.currentSelect.text = e.target.value
-        // store.dispatch(counterActions.setItemView(state.currentSelect))
     }
-
     return (
         <div className={"right-panel"}>
             <div>文字：
                 <Input style={{width: '80%'}}
                        placeholder="Flight name"
-                       size="large"
+                       size="middle"
                        value={state.currentSelect.text}
                        onChange={onChange}
                 />

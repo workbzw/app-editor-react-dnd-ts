@@ -1,11 +1,11 @@
-import {DragItemViewType} from "../../../../common/editor/DragItemViewType";
+import {DragItemViewType} from "../../../common/editor/DragItemViewType";
 import {EditableText} from "./editableview/EditableText";
 import {EditableImage} from "./editableview/EditableImage";
 import {EditableList} from "./editableview/EditableList";
 import {EditableBanner} from "./editableview/EditableBanner";
 import {EditableButton} from "./editableview/EditableButton";
 import {EditableInput} from "./editableview/EditableInput";
-import {ItemView} from "../../../../context/context";
+import {ItemView} from "../../../store/GlobalViewData";
 
 export class DragItemViewProvider {
     static of(itemView: ItemView,  index: number) {

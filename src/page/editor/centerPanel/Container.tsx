@@ -1,11 +1,11 @@
 import {FC, useCallback} from 'react'
-import {DragItemViewType, DragType, DropAcceptList} from "../../../../common/editor/DragItemViewType";
+import {DragItemViewType, DragType, DropAcceptList} from "../../../common/editor/DragItemViewType";
 import {DragItemViewProvider} from "./DragItemViewProvider";
-import {ItemView} from "../../../../context/context";
+import {ItemView, ItemViewFieldType} from "../../../store/GlobalViewData";
 import {useDrop} from "react-dnd";
 import {useSelector} from "react-redux";
-import {counterActions, RootState, store} from "../../../../store";
-import {random} from "../../../../common/Utils";
+import {counterActions, RootState, store} from "../../../store";
+import {random} from "../../../common/Utils";
 
 const style = {
     width: "100%",
@@ -23,7 +23,6 @@ export interface Props {
 }
 
 
-
 export const Container: FC<Props> = () => {
     const state = useSelector((state: RootState) => state);
     let [, drop] = useDrop(() => ({
@@ -32,12 +31,13 @@ export const Container: FC<Props> = () => {
             if (store.getState().currentDrag.dragType === DragType.Add) {
                 const didDrop = monitor.didDrop()
                 if (didDrop) return
-                let randomId  = random()
+                let randomId = random()
                 store.dispatch(counterActions.addView(
                     {
                         id: randomId,
                         type: store.getState().currentDrag.dragViewType,
                         text: randomId,
+                        fields: []
                     }))
             }
         }

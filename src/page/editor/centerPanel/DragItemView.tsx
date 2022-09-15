@@ -1,12 +1,12 @@
-import type {Identifier, XYCoord} from 'dnd-core'
+import type {Identifier} from 'dnd-core'
 import type {FC} from 'react'
 import {useRef, useState} from 'react'
 import {useDrag, useDrop} from 'react-dnd'
-import {DragItemViewType, DragType, DropAcceptList} from "../../../../common/editor/DragItemViewType";
-import {ItemView} from "../../../../context/context";
-import {counterActions, RootState, store} from "../../../../store";
+import {DragItemViewType, DragType, DropAcceptList} from "../../../common/editor/DragItemViewType";
+import {ItemView} from "../../../store/GlobalViewData";
+import {counterActions, RootState, store} from "../../../store";
 import {useSelector} from "react-redux";
-import {random} from "../../../../common/Utils";
+import {random} from "../../../common/Utils";
 
 export interface Props {
     itemView: ItemView
@@ -23,7 +23,7 @@ interface DragItem {
 export const DragItemView: FC<Props> = ({itemView, index, children}) => {
     const ref = useRef<HTMLDivElement>(null)
     const state = useSelector((state: RootState) => state);
-    const style = {
+    const style = {//显示虚线框
         border: state.currentSelect.id === itemView.id ? '1px dashed gray' : '0px dashed gray',
         padding: '0.5rem 0.5rem 0.5rem 0.5rem',
         marginBottom: '.5rem',
@@ -34,11 +34,11 @@ export const DragItemView: FC<Props> = ({itemView, index, children}) => {
     const [{
         handlerId,
         isOver,
-        isOverCurrent
+        isOverCurrent//当前悬停
     }, drop] = useDrop<DragItem, void, { handlerId: Identifier | null, isOver: boolean, isOverCurrent: boolean }>({
         accept: DropAcceptList,
         drop: (item, monitor) => {
-            if (store.getState().currentDrag.dragType === DragType.Add) {
+            if (store.getState().currentDrag.dragType === DragType.Add) {//如果是新增
                 const didDrop = monitor.didDrop()
                 if (didDrop) return
                 let randomId = random()
@@ -48,10 +48,11 @@ export const DragItemView: FC<Props> = ({itemView, index, children}) => {
                         itemView: {
                             id: randomId,
                             type: store.getState().currentDrag.dragViewType,
-                            text: randomId
+                            text: randomId,
+                            fields: []
                         }
                     }))
-            } else if (store.getState().currentDrag.dragType === DragType.Adjust) {
+            } else if (store.getState().currentDrag.dragType === DragType.Adjust) {//如果是调整
                 if (mDragIndex !== -1) {
                     store.dispatch(counterActions.moveToIndex({
                         dragIndex: mDragIndex,
@@ -68,21 +69,9 @@ export const DragItemView: FC<Props> = ({itemView, index, children}) => {
                 isOverCurrent: monitor.isOver({shallow: true})
             }
         },
-        hover(item: DragItem, monitor) {
+        hover(item: DragItem, monitor) {//拖拽悬停
             if (!ref.current) return
-            const dragIndex = item.index
-            setMDragIndex(item.index)
-            const hoverIndex = index
-            if (dragIndex === hoverIndex) return
-            const hoverBoundingRect = ref.current?.getBoundingClientRect()
-            const hoverMiddleY = (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2
-            const clientOffset = monitor.getClientOffset()
-            const hoverClientY = (clientOffset as XYCoord).y - hoverBoundingRect.top
-            if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) return
-            if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) return
-            // moveItem(dragIndex, hoverIndex)
-            // store.dispatch(counterActions.moveToIndex({dragIndex: dragIndex, hoverIndex: hoverIndex}))
-            // item.index = hoverIndex
+            setMDragIndex(item.index)//设置当前插入位置
         },
     })
 
@@ -106,7 +95,7 @@ export const DragItemView: FC<Props> = ({itemView, index, children}) => {
     const opacity = isDragging ? 0 : 1
     drag(drop(ref))
     let color
-    if (isOverCurrent) {
+    if (isOverCurrent) {//悬停变色
         color = '#009a00'
         console.log("index:" + index)
         console.log("mDragIndex:" + mDragIndex)
@@ -114,20 +103,22 @@ export const DragItemView: FC<Props> = ({itemView, index, children}) => {
         color = '#ffffff'
     }
     let top
-    if (mDragIndex < index) {
+    if (mDragIndex < index) {//上边显示指示器 or 下边显示指示器
         top = true
     } else {
         top = false
     }
     return (
         <div>
-            <div style={{width: "100%", height: 2, backgroundColor: !top?color:'#ffffff'}}></div>
+            {/*指示器*/}
+            <div style={{width: "100%", height: 2, backgroundColor: !top ? color : '#ffffff'}}/>
             <div ref={ref} onDrag={handleDrag} onClick={handleClick}
                  style={{...style, opacity}}
                  data-handler-id={handlerId}>
                 {children}
             </div>
-            <div style={{width: "100%", height: 2, backgroundColor: top?color:'#ffffff'}}></div>
+            {/*指示器*/}
+            <div style={{width: "100%", height: 2, backgroundColor: top ? color : '#ffffff'}}/>
         </div>
     )
 }

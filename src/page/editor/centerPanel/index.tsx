@@ -2,7 +2,7 @@ import React, {FC} from "react";
 import "./center.scss"
 import {HTML5Backend} from "react-dnd-html5-backend";
 import {DndProvider} from "react-dnd";
-import {Container} from "./editor-react-dnd-sortable/Container";
+import {Container} from "./Container";
 
 interface Props {
 }

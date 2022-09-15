@@ -6,6 +6,7 @@
 ###### to be continued...(未完待续...)
 
 ![](read-me-res/work.gif)
+![](read-me-res/adjust_attrs.gif)
 ![](read-me-res/img.png)
 
 [//]: # (![]&#40;read-me-res/img.png&#41;)
