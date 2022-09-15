@@ -20,7 +20,7 @@ interface DragItem {
     type: string
 }
 
-export const DragItemView: FC<Props> = ({itemView, index, children}) => {
+export const DraggableView: FC<Props> = ({itemView, index, children}) => {
     const ref = useRef<HTMLDivElement>(null)
     const state = useSelector((state: RootState) => state);
     const style = {//显示虚线框

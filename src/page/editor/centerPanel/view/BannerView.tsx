@@ -1,6 +1,6 @@
 import React from "react";
 import {Carousel} from "antd";
-import {DragItemView, Props} from "../DragItemView";
+import {DraggableView, Props} from "../DraggableView";
 
 interface P extends Props {
     imgUrl?: string;
@@ -15,9 +15,9 @@ const contentStyle: React.CSSProperties = {
     background: '#364d79',
 };
 
-export const EditableBanner = (props: P) => {
+export const BannerView = (props: P) => {
     let {itemView, index} = props;
-    return (<DragItemView itemView={itemView} index={index} >
+    return (<DraggableView itemView={itemView} index={index} >
             <Carousel autoplay>
                 <div>
                     <h3 style={contentStyle}>图片1</h3>
@@ -28,10 +28,7 @@ export const EditableBanner = (props: P) => {
                 <div>
                     <h3 style={contentStyle}>图片3</h3>
                 </div>
-                <div>
-                    <h3 style={contentStyle}>图片4</h3>
-                </div>
             </Carousel>
-        </DragItemView>
+        </DraggableView>
     )
 }

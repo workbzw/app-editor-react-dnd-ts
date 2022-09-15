@@ -1,6 +1,6 @@
 import React from "react";
 import {Avatar, List} from "antd";
-import {DragItemView, Props} from "../DragItemView";
+import {DraggableView, Props} from "../DraggableView";
 
 interface P extends Props {
 }
@@ -14,9 +14,9 @@ const data = Array.from({length: 3}).map((_, i) => ({
     content:
         'We supply a series of design principles, practical patterns and high quality design resources (Sketch and Axure), to help people create their product prototypes beautifully and efficiently.',
 }));
-export const EditableList = (props: P) => {
+export const ListView = (props: P) => {
     let {itemView, index, } = props;
-    return (<DragItemView itemView={itemView} index={index} >
+    return (<DraggableView itemView={itemView} index={index} >
             <List
                 // header={<div>Header</div>}
                 // footer={<div>Footer</div>}
@@ -32,6 +32,6 @@ export const EditableList = (props: P) => {
                     </List.Item>
                 )}
             />
-        </DragItemView>
+        </DraggableView>
     )
 }

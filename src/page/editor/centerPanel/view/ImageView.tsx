@@ -1,15 +1,15 @@
 import React from "react";
 import {Image} from "antd";
-import {DragItemView, Props} from "../DragItemView";
+import {DraggableView, Props} from "../DraggableView";
 
 interface P extends Props {
     imgUrl?: string;
 }
 
-export const EditableImage = (props: P) => {
+export const ImageView = (props: P) => {
     let {itemView, imgUrl,index, } = props;
-    return (<DragItemView itemView={itemView} index={index} >
+    return (<DraggableView itemView={itemView} index={index} >
             <Image src={imgUrl} preview={false}/>
-        </DragItemView>
+        </DraggableView>
     )
 }

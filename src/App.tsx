@@ -6,37 +6,9 @@ import {EditorPage} from "./page/editor";
 import {Provider} from "react-redux";
 import {store} from "./store";
 
-type Action = {
-    type: string
-}
-type State = {
-    value: number
-}
-
 function App() {
-
-
-    // Create a "reducer" function that determines what the new state
-// should be when something happens in the app
-    function counterReducer(state: State, action: Action) {
-        // Reducers usually look at the type of action that happened
-        // to decide how to update the state
-        switch (action.type) {
-            case 'counter/incremented':
-                return {...state, value: state.value + 1}
-            case 'counter/decremented':
-                return {...state, value: state.value - 1}
-            default:
-                // If the reducer doesn't care about this action type,
-                // return the existing state unchanged
-                return state
-        }
-    }
-
-
     return (
         <Provider store={store}>
-
             <Fragment>
                 <BrowserRouter>
                     <Routes>
@@ -47,11 +19,9 @@ function App() {
                     </Routes>
                 </BrowserRouter>
             </Fragment>
-
         </Provider>
     );
 }
-
 export default App;
 
 

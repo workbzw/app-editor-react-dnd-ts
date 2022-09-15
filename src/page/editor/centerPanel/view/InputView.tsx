@@ -1,16 +1,16 @@
 import React from "react";
 import {Input} from "antd";
-import {DragItemView, Props} from "../DragItemView";
+import {DraggableView, Props} from "../DraggableView";
 
 interface P extends Props {
     preInput?: string;
     hint?: string;
 }
 
-export const EditableInput = (props: P) => {
+export const InputView = (props: P) => {
     let {itemView, index, } = props;
-    return (<DragItemView itemView={itemView} index={index} >
+    return (<DraggableView itemView={itemView} index={index} >
             <Input value={itemView.text}/>
-        </DragItemView>
+        </DraggableView>
     )
 }
